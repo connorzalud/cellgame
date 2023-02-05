@@ -3,9 +3,9 @@ const gameVariables = {
     ATP: 1,
     oxygen: 1,
     proteins: 0,
-    ser: 0,
-    met: 0,
-    val:0,
+    ser: 1,
+    met: 1,
+    val:1,
     geneCheck: false,
 }
 
@@ -71,11 +71,11 @@ const ribosome = {
             let metCheck = 0;
             let valCheck = 0;
             for (i=0; i<nucleus.arrayDNA[0].length; i++){
-                if(nucleus.arrayDNA[0][i]=== "ser"){
+                if(nucleus.arrayDNA[0][i]=== "SER"){
                     serCheck += 1;
-                } else if(nucleus.arrayDNA[0][i]==="met"){
+                } else if(nucleus.arrayDNA[0][i]==="MET"){
                     metCheck += 1;
-                } else if(nucleus.arrayDNA[0][i]==="val"){
+                } else if(nucleus.arrayDNA[0][i]==="VAL"){
                     valCheck += 1;
                 }
             }
@@ -86,7 +86,21 @@ const ribosome = {
             console.log(aminoAcidCheck);
 
             if(gameVariables.ser>=aminoAcidCheck[0] && gameVariables.met>=aminoAcidCheck[1] && gameVariables.val>=aminoAcidCheck[2]){
-                console.log("Protein produced!")
+                let userAminoAcid = [];
+               userAminoAcid.push(prompt("First amino acid?"));
+               userAminoAcid.push(prompt("Second amino acid?"));
+               userAminoAcid.push(prompt("Third amino acid?"));
+               console.log(userAminoAcid);
+               for(i=0; i<userAminoAcid.length; i++){
+                if(userAminoAcid[i]!==nucleus.arrayDNA[0][i]){
+                   return console.log("Wrong order.")
+                } 
+                
+               }console.log("Protein produced!")
+                gameVariables.geneCheck = false;
+                gameVariables.ser -= serCheck;
+                gameVariables.met -= metCheck;
+                gameVariables.val -= valCheck;
             } else{
                 console.log("Missing necessary amino acids.")
             }
@@ -100,7 +114,7 @@ const nucleus = {
         console.log(`Ths ${this.name} is the control center of the cell. The DNA is stored here.`)
     },
 
-    arrayDNA: [["ser","met","val"]],
+    arrayDNA: [["SER","MET","VAL"]],
 
     checkRNA(gene){
         if(gameVariables.geneCheck===true){
@@ -115,3 +129,21 @@ const nucleus = {
 
     
 }
+
+//buttons for each organelle and a div which brings up the function choices for each organelle as additional buttons
+
+//a display area to display messages
+
+//a display area to display game variables
+
+//a way to select different genes
+
+//transcription gameplay (select gene, transcribe into RNA, then replace codons with correct amino acids)
+
+//after checking for right number of amino acids, select them in the right order
+
+//a way to display which proteins have been produced(or just a counter)
+
+//a way to check if all proteins have been produced (game over)
+
+//image of cell which highlights different organelles upon selection?
