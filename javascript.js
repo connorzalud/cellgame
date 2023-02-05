@@ -1,3 +1,13 @@
+const DOM = {
+    header: document.querySelector(".header"),
+    gameContainer: document.querySelector(".game-container"),
+    mainContainer: document.querySelector(".main-container"),
+    variableContainer: document.querySelector(".variable-container"),
+    organelleButtons: document.querySelector(".cell-buttons-container"),
+    organelleActions: document.querySelector(".cell-actions-container"),
+}
+
+
 const gameVariables = {
     glucose: 1,
     ATP: 1,
@@ -140,7 +150,7 @@ const nucleus = {
 
 //transcription gameplay (select gene, transcribe into RNA, then replace codons with correct amino acids)
 
-//after checking for right number of amino acids, select them in the right order
+//after checking for right number of amino acids, select them in the right order - done
 
 //a way to display which proteins have been produced(or just a counter)
 
