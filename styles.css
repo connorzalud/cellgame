@@ -38,7 +38,7 @@
     
 }
 
-.cell-buttons-container button{
+cell-buttons-container button{
     height:fit-content
 }
 
@@ -46,4 +46,35 @@
     grid-column: 3/4;
     grid-row:2/3;
     border:1px solid black;
+}
+
+.inactive{
+    display:none
+}
+
+.active{
+    height:199px;
+    grid-column: 1/4;
+    justify-content: space-around;
+    align-items: center;
+}
+
+.btn-action{
+    width: 150px;
+}
+
+.amino-acid{
+    display:flex;
+    grid-column: 3/4;
+    grid-row:2/3;
+    justify-content: space-around;
+    align-items: center;
+    height:199px;
+    gap:30px;
+}
+
+.display-container{
+    display:grid;
+    justify-content: center;
+    align-items: center;
 }
