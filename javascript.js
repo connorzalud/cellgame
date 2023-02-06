@@ -3,14 +3,129 @@ const DOM = {
     gameContainer: document.querySelector(".game-container"),
     mainContainer: document.querySelector(".main-container"),
     variableContainer: document.querySelector(".variable-container"),
+    displayContainer: document.querySelector(".display-container"),
+    aminoAcidContainer: document.createElement("div"),
     organelleButtons: document.querySelector(".cell-buttons-container"),
     organelleActions: document.querySelector(".cell-actions-container"),
+    mitoActionsContainer: document.createElement("div"),
+    cellMemActionsContainer: document.createElement("div"),
+    mitoBtn: document.querySelector("#mitochondria"),
+    cellMemBtn: document.querySelector("#cell-membrane"),
+
+
+    createEl(element){
+        return document.createElement(element)
+    },
+
+    mitoBtnCreated: false,
+    cellMemBtnCreated: false,
+
+    aminoAcidBtnCreated:false,
+    aminoAcidText: false,
+
 }
+
+DOM.mitoBtn.addEventListener("click", function(){
+    if(!DOM.mitoBtnCreated){
+        const btn1 = DOM.createEl("button");
+        const btn2 = DOM.createEl("button");
+        const btn3 = DOM.createEl("button");
+        btn1.textContent = "Des";
+        btn2.textContent = "Instr";
+        btn3.textContent = "Produce";
+        btn1.classList.add("btn-action");
+        btn2.classList.add("btn-action");
+        btn3.classList.add("btn-action");
+        DOM.mitoActionsContainer.append(btn1);
+        DOM.mitoActionsContainer.append(btn2);
+        DOM.mitoActionsContainer.append(btn3);
+        DOM.mitoActionsContainer.classList.add("active");
+        DOM.organelleActions.append(DOM.mitoActionsContainer);
+        DOM.mitoBtnCreated= true;
+    }
+
+    DOM.mitoActionsContainer.style.display = "flex";
+    DOM.cellMemActionsContainer.style.display = "none";
+})
+
+DOM.cellMemBtn.addEventListener("click", function(){
+    if(!DOM.cellMemBtnCreated){
+        const btn1 = DOM.createEl("button");
+        const btn2 = DOM.createEl("button");
+        const btn3 = DOM.createEl("button");
+        btn1.textContent = "Des";
+        btn2.textContent = "Glucose";
+        btn3.textContent = "Amino Acid";
+        btn1.classList.add("btn-action");
+        btn2.classList.add("btn-action");
+        btn3.classList.add("btn-action");
+        DOM.cellMemActionsContainer.append(btn1);
+        DOM.cellMemActionsContainer.append(btn2);
+        DOM.cellMemActionsContainer.append(btn3);
+        DOM.cellMemActionsContainer.classList.add("active");
+        DOM.organelleActions.append(DOM.cellMemActionsContainer);
+        DOM.cellMemBtnCreated= true;
+        btn3.addEventListener("click",function(){
+            if(!DOM.aminoAcidBtnCreated){
+                const btn1 = DOM.createEl("button");
+                const btn2 = DOM.createEl("button");
+                const btn3 = DOM.createEl("button");
+               // const title = DOM.createEl("p");
+                btn1.textContent = "SER";
+                btn2.textContent = "MET";
+                btn3.textContent= "VAL";
+               // title.textContent = "Choose an amino acid!"
+              //  title.style.marginBottom = "-50px"
+              //  DOM.displayContainer.append(title);
+                DOM.aminoAcidContainer.append(btn1);
+                DOM.aminoAcidContainer.append(btn2);
+                DOM.aminoAcidContainer.append(btn3);
+                DOM.aminoAcidContainer.classList.add("amino-acid")
+                DOM.displayContainer.append(DOM.aminoAcidContainer);
+                DOM.aminoAcidBtnCreated = true;
+                btn1.addEventListener("click",function(){
+                    cellMembrane.getAminoAcid("ser");
+                   // DOM.aminoAcidContainer.style.display = "none"
+                   DOM.aminoAcidContainer.remove();
+                   
+                   
+                    
+                })
+
+                btn2.addEventListener("click", function(){
+                    cellMembrane.getAminoAcid("met");
+                    DOM.aminoAcidContainer.style.display = "none"
+                })
+
+                btn3.addEventListener("click",function(){
+                    cellMembrane.getAminoAcid("val");
+                    DOM.aminoAcidContainer.style.display = "none"
+                })
+
+            }
+            
+               DOM.displayContainer.textContent="";
+               
+            
+            
+           // DOM.aminoAcidContainer.style.display = "flex"
+           DOM.displayContainer.append(DOM.aminoAcidContainer);
+          
+
+
+        })
+    }
+
+    
+
+    DOM.mitoActionsContainer.style.display = "none";
+    DOM.cellMemActionsContainer.style.display = "flex";
+})
 
 
 const gameVariables = {
     glucose: 1,
-    ATP: 1,
+    ATP: 10,
     oxygen: 1,
     proteins: 0,
     ser: 1,
@@ -43,9 +158,11 @@ const mitochondria ={
         } else if (gameVariables.oxygen === 0){
             console.log("Not enough oxygen!")
         }
-    }
+    },
 
+    
 }
+
 
 const cellMembrane = {
     name: "cell membrane",
@@ -62,10 +179,13 @@ const cellMembrane = {
         if(type === "ser" && gameVariables.ATP>=1){
             gameVariables.ser += 1;
             gameVariables.ATP -= 1;
-            console.log("One SER amino acid entered the cell!")
+            DOM.displayContainer.textContent="One SER amino acid entered the cell!"
         }
     }
+    
 }
+
+
 
 const ribosome = {
     name: "ribosome",
@@ -138,6 +258,31 @@ const nucleus = {
     },
 
     
+}
+
+const gameLogic = {
+    createBtns2(){
+        let x;
+        DOM.mitoBtn.addEventListener("click", function(e){
+            x = e.target.id
+        });
+        const methodKeys = Object.keys(x).filter(key=> typeof x[key] === "function");
+        console.log(methodKeys);
+    },
+
+    accessObject(){
+        DOM.mitoBtn.addEventListener("click", function(e){
+            console.log(e.target.id);
+            return(e.target.id);
+            
+        })
+    }
+}
+
+
+
+const gameController = {
+
 }
 
 //buttons for each organelle and a div which brings up the function choices for each organelle as additional buttons
