@@ -9,8 +9,12 @@ const DOM = {
     organelleActions: document.querySelector(".cell-actions-container"),
     mitoActionsContainer: document.createElement("div"),
     cellMemActionsContainer: document.createElement("div"),
+    nucleusActionsContainer: document.createElement("div"),
+    ribosomeActionsContainer: document.createElement("div"),
     mitoBtn: document.querySelector("#mitochondria"),
     cellMemBtn: document.querySelector("#cell-membrane"),
+    nucleusBtn: document.querySelector("#nucleus"),
+    ribosomeBtn: document.querySelector("#ribosome"),
 
 
     createEl(element){
@@ -19,6 +23,8 @@ const DOM = {
 
     mitoBtnCreated: false,
     cellMemBtnCreated: false,
+    nucleusBtnCreated:false,
+    ribosomeBtnCreated: false,
 
     aminoAcidBtnCreated:false,
     aminoAcidText: false,
@@ -46,6 +52,8 @@ DOM.mitoBtn.addEventListener("click", function(){
 
     DOM.mitoActionsContainer.style.display = "flex";
     DOM.cellMemActionsContainer.style.display = "none";
+    DOM.nucleusActionsContainer.style.display = "none";
+    DOM.ribosomeActionsContainer.style.display = "none";
 })
 
 DOM.cellMemBtn.addEventListener("click", function(){
@@ -85,7 +93,6 @@ DOM.cellMemBtn.addEventListener("click", function(){
                 DOM.aminoAcidBtnCreated = true;
                 btn1.addEventListener("click",function(){
                     cellMembrane.getAminoAcid("ser");
-                   // DOM.aminoAcidContainer.style.display = "none"
                    DOM.aminoAcidContainer.remove();
                    
                    
@@ -94,12 +101,12 @@ DOM.cellMemBtn.addEventListener("click", function(){
 
                 btn2.addEventListener("click", function(){
                     cellMembrane.getAminoAcid("met");
-                    DOM.aminoAcidContainer.style.display = "none"
+                    DOM.aminoAcidContainer.remove()
                 })
 
                 btn3.addEventListener("click",function(){
                     cellMembrane.getAminoAcid("val");
-                    DOM.aminoAcidContainer.style.display = "none"
+                    DOM.aminoAcidContainer.remove()
                 })
 
             }
@@ -108,7 +115,7 @@ DOM.cellMemBtn.addEventListener("click", function(){
                
             
             
-           // DOM.aminoAcidContainer.style.display = "flex"
+           
            DOM.displayContainer.append(DOM.aminoAcidContainer);
           
 
@@ -120,8 +127,53 @@ DOM.cellMemBtn.addEventListener("click", function(){
 
     DOM.mitoActionsContainer.style.display = "none";
     DOM.cellMemActionsContainer.style.display = "flex";
+    DOM.nucleusActionsContainer.style.display = "none";
+    DOM.ribosomeActionsContainer.style.display = "none";
 })
 
+DOM.nucleusBtn.addEventListener("click",function(){
+    if(!DOM.nucleusBtnCreated){
+    const btn1 = DOM.createEl("button");
+    const btn2 = DOM.createEl("button");
+    btn1.textContent = "Say Des";
+    btn2.textContent = "Check Gene"
+    btn1.classList.add("btn-action");
+    btn2.classList.add("btn-action");
+    DOM.nucleusActionsContainer.append(btn1);
+    DOM.nucleusActionsContainer.append(btn2);
+    DOM.nucleusActionsContainer.classList.add("active");
+    DOM.organelleActions.append(DOM.nucleusActionsContainer);
+    DOM.nucleusBtnCreated = true;}
+
+
+    DOM.cellMemActionsContainer.style.display = "none";
+    DOM.aminoAcidContainer.style.display = "none";
+    DOM.nucleusActionsContainer.style.display = "flex";
+    DOM.ribosomeActionsContainer.style.display = "none";
+})
+
+
+DOM.ribosomeBtn.addEventListener("click",function(){
+    if(!DOM.ribosomeBtnCreated){
+        const btn1 = DOM.createEl("button");
+        const btn2 = DOM.createEl("button");
+        btn1.textContent = "Say Des";
+        btn2.textContent= "Produce Protein";
+        btn1.classList.add("btn-action");
+        btn2.classList.add("btn-action");
+        DOM.ribosomeActionsContainer.append(btn1);
+        DOM.ribosomeActionsContainer.append(btn2);
+        DOM.ribosomeActionsContainer.classList.add("active");
+        DOM.organelleActions.append(DOM.ribosomeActionsContainer);
+        DOM.ribosomeBtnCreated = true
+    }
+
+    DOM.cellMemActionsContainer.style.display = "none";
+    DOM.aminoAcidContainer.style.display = "none";
+    DOM.nucleusActionsContainer.style.display = "none";
+    DOM.ribosomeActionsContainer.style.display = "flex";
+
+})
 
 const gameVariables = {
     glucose: 1,
