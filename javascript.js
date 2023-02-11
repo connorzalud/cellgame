@@ -6,6 +6,7 @@ const DOM = {
     glucoseDisplay: document.querySelector("#glucose"),
     atpDisplay: document.querySelector("#atp"),
     oxyDisplay: document.querySelector("#oxygen"),
+    co2Display:document.querySelector("#co2"),
     proDisplay: document.querySelector("#proteins"),
     valDisplay: document.querySelector("#val"),
     serDisplay: document.querySelector("#ser"),
@@ -23,6 +24,7 @@ const DOM = {
     cellMemBtn: document.querySelector("#cell-membrane"),
     nucleusBtn: document.querySelector("#nucleus"),
     ribosomeBtn: document.querySelector("#ribosome"),
+    startBtn: document.querySelector("#start"),
 
 
     createEl(element){
@@ -69,21 +71,34 @@ DOM.cellMemBtn.addEventListener("click", function(){
         const btn1 = DOM.createEl("button");
         const btn2 = DOM.createEl("button");
         const btn3 = DOM.createEl("button");
+        const btn4 = DOM.createEl("button");
         btn1.innerHTML = "Des";
         btn2.innerHTML = "Glucose";
         btn3.innerHTML = "Amino Acid";
+        btn4.innerHTML = "Oxygen"
         btn1.classList.add("btn-action");
         btn2.classList.add("btn-action");
         btn3.classList.add("btn-action");
+        btn4.classList.add("btn-action");
         DOM.cellMemActionsContainer.append(btn1);
         DOM.cellMemActionsContainer.append(btn2);
         DOM.cellMemActionsContainer.append(btn3);
+        DOM.cellMemActionsContainer.append(btn4);
         DOM.cellMemActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.cellMemActionsContainer);
         DOM.cellMemBtnCreated= true;
         btn1.addEventListener("click", function(){
             cellMembrane.sayDes();
         })
+
+        btn4.addEventListener("click",function(){
+            cellMembrane.getOxygen();
+        })
+
+        btn2.addEventListener("click", function(){
+            cellMembrane.getGlucose();
+        })
+        
         btn3.addEventListener("click",function(){
             if(!DOM.aminoAcidBtnCreated){
                 const btn1 = DOM.createEl("button");
@@ -116,10 +131,10 @@ DOM.cellMemBtn.addEventListener("click", function(){
                     DOM.aminoAcidContainer.remove()
                 })
 
-            } else if (DOM.aminoAcidBtnCreated){
+            } DOM.aminoAcidBtnCreated
             
                DOM.displayContainer.innerHTML="";
-               DOM.displayContainer.append(DOM.aminoAcidContainer);}
+               DOM.displayContainer.append(DOM.aminoAcidContainer);
           
 
 
@@ -154,6 +169,9 @@ DOM.nucleusBtn.addEventListener("click",function(){
             const btn3 = DOM.createEl("button");
             const btn4 = DOM.createEl("button");
             btn1.setAttribute("id", 0);
+            btn2.setAttribute("id", 1);
+            btn3.setAttribute("id", 2);
+            btn4.setAttribute("id", 3);
             btn1.textContent = "Gene 1";
             btn2.textContent = "Gene 2";
             btn3.textContent = "Gene 3";
@@ -170,16 +188,35 @@ DOM.nucleusBtn.addEventListener("click",function(){
                     nucleus.checkRNA(e.target.id);
                 })
 
+                btn2.addEventListener("click",function(e){
+                    DOM.geneContainer.remove();
+                    nucleus.checkRNA(e.target.id);
+                })
+
+                btn3.addEventListener("click",function(e){
+                    DOM.geneContainer.remove();
+                    nucleus.checkRNA(e.target.id);
+                })
+
+                btn4.addEventListener("click", function(e){
+                    DOM.geneContainer.remove();
+                    nucleus.checkRNA(e.target.id);
+                })
+
            }
            
+           if(gameVariables.geneCheck === true){
+            nucleus.checkRNA();
+           } else{
+
            DOM.displayContainer.innerHTML = "";
-           DOM.displayContainer.append(DOM.geneContainer);
+           DOM.displayContainer.append(DOM.geneContainer);}
         })
 
 }
 
 
-    DOM.cellMemActionsContainer.style.display = "none";
+    DOM.mitoActionsContainer.style.display = "none";
     DOM.cellMemActionsContainer.style.display = "none";
     DOM.nucleusActionsContainer.style.display = "flex";
     DOM.ribosomeActionsContainer.style.display = "none";
@@ -205,7 +242,7 @@ DOM.ribosomeBtn.addEventListener("click",function(){
     }
 
     DOM.cellMemActionsContainer.style.display = "none";
-    DOM.aminoAcidContainer.style.display = "none";
+    DOM.mitoActionsContainer.style.display = "none";
     DOM.nucleusActionsContainer.style.display = "none";
     DOM.ribosomeActionsContainer.style.display = "flex";
 
@@ -216,6 +253,7 @@ const display = {
         DOM.glucoseDisplay.innerHTML = `<b>Glucose</b>: ${gameVariables.glucose}`;
         DOM.atpDisplay.innerHTML = `<b>ATP</b>: ${gameVariables.ATP}`;
         DOM.oxyDisplay.innerHTML = `<b>Oxygen</b>: ${gameVariables.oxygen}`;
+        DOM.co2Display.innerHTML = `<b>Carbon Dioxide</b>: ${gameVariables.co2}`;
         DOM.proDisplay.innerHTML = `<b>Proteins</b>: ${gameVariables.proteins}`;
         DOM.metDisplay.innerHTML = `<b>MET</b>: ${gameVariables.met}`;
         DOM.valDisplay.innerHTML = `<b>VAL</b>: ${gameVariables.val}`;
@@ -243,10 +281,11 @@ const gameVariables = {
     glucose: 1,
     ATP: 10,
     oxygen: 1,
+    co2: 0,
     proteins: 0,
-    ser: 1,
-    met: 1,
-    val:1,
+    ser: 10,
+    met: 10,
+    val:10,
     geneCheck: false,
     geneValue: 0,
 }
@@ -288,9 +327,14 @@ const cellMembrane = {
         console.log(`The ${this.name} surrounds the cell. It also allows materials in and out.`)
     },
     getGlucose(){
+        if(gameVariables.ATP >=1){
         gameVariables.ATP -= 1;
-        gameVariables.glucose =+ 1;
-        console.log("One glucose entered the cell!")
+        gameVariables.glucose += 1;
+        display.showVariables();
+        display.turnGreen(DOM.glucoseDisplay);
+        display.turnRed(DOM.atpDisplay);
+        DOM.displayContainer.innerHTML="One glucose entered the cell!";
+        }
     },
 
     getAminoAcid(type){
@@ -300,9 +344,17 @@ const cellMembrane = {
             DOM.displayContainer.innerHTML="One SER amino acid entered the cell!"
             display.showVariables();
             display.turnRed(DOM.atpDisplay);
+            display.turnGreen(DOM.serDisplay);
         }
-    }
+    },
     
+    getOxygen(){
+        DOM.displayContainer.innerHTML = "One oxygen molecule entered the cell!"
+        gameVariables.oxygen += 1;
+        display.showVariables();
+        display.turnGreen(DOM.oxyDisplay);
+    }
+
 }
 
 
@@ -364,7 +416,7 @@ const nucleus = {
         console.log(`Ths ${this.name} is the control center of the cell. The DNA is stored here.`)
     },
 
-    arrayDNA: [["SER","MET","VAL"]],
+    arrayDNA: [["SER","MET","VAL"],["SER", "SER", "MET"],["MET", "VAL", "VAL"],["SER", "MET" ,"MET"]],
 
     checkRNA(gene){
         if(gameVariables.geneCheck===true){
@@ -381,30 +433,6 @@ const nucleus = {
     
 }
 
-const gameLogic = {
-    createBtns2(){
-        let x;
-        DOM.mitoBtn.addEventListener("click", function(e){
-            x = e.target.id
-        });
-        const methodKeys = Object.keys(x).filter(key=> typeof x[key] === "function");
-        console.log(methodKeys);
-    },
-
-    accessObject(){
-        DOM.mitoBtn.addEventListener("click", function(e){
-            console.log(e.target.id);
-            return(e.target.id);
-            
-        })
-    }
-}
-
-
-
-const gameController = {
-
-}
 
 display.showVariables()
 
