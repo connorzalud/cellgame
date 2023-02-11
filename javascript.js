@@ -3,6 +3,13 @@ const DOM = {
     gameContainer: document.querySelector(".game-container"),
     mainContainer: document.querySelector(".main-container"),
     variableContainer: document.querySelector(".variable-container"),
+    glucoseDisplay: document.querySelector("#glucose"),
+    atpDisplay: document.querySelector("#atp"),
+    oxyDisplay: document.querySelector("#oxygen"),
+    proDisplay: document.querySelector("#proteins"),
+    valDisplay: document.querySelector("#val"),
+    serDisplay: document.querySelector("#ser"),
+    metDisplay:document.querySelector("#met"),
     displayContainer: document.querySelector(".display-container"),
     aminoAcidContainer: document.createElement("div"),
     organelleButtons: document.querySelector(".cell-buttons-container"),
@@ -73,6 +80,9 @@ DOM.cellMemBtn.addEventListener("click", function(){
         DOM.cellMemActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.cellMemActionsContainer);
         DOM.cellMemBtnCreated= true;
+        btn1.addEventListener("click", function(){
+            cellMembrane.sayDes();
+        })
         btn3.addEventListener("click",function(){
             if(!DOM.aminoAcidBtnCreated){
                 const btn1 = DOM.createEl("button");
@@ -175,6 +185,34 @@ DOM.ribosomeBtn.addEventListener("click",function(){
 
 })
 
+const display = {
+    showVariables(){
+        DOM.glucoseDisplay.textContent = `Glucose: ${gameVariables.glucose}`;
+        DOM.atpDisplay.textContent = `ATP: ${gameVariables.ATP}`;
+        DOM.oxyDisplay.textContent = `Oxygen: ${gameVariables.oxygen}`;
+        DOM.proDisplay.textContent = `Proteins: ${gameVariables.proteins}`;
+        DOM.metDisplay.textContent = `MET: ${gameVariables.met}`;
+        DOM.valDisplay.textContent = `VAL: ${gameVariables.val}`;
+        DOM.serDisplay.textContent = `SER: ${gameVariables.ser}`;
+    },
+
+    turnRed(div){
+        div.style.color = "red"
+        setTimeout(function(){
+            div.style.color = "";
+        },500)
+    },
+
+    turnGreen(div){
+        div.style.color = "green"
+        setTimeout(function(){
+            div.style.color = "";
+        },500)
+    }
+}
+
+
+
 const gameVariables = {
     glucose: 1,
     ATP: 10,
@@ -219,6 +257,7 @@ const mitochondria ={
 const cellMembrane = {
     name: "cell membrane",
     sayDes(){
+        DOM.displayContainer.textContent = `The ${this.name} surrounds the cell. It also allows materials in and out.`;
         console.log(`The ${this.name} surrounds the cell. It also allows materials in and out.`)
     },
     getGlucose(){
@@ -232,6 +271,8 @@ const cellMembrane = {
             gameVariables.ser += 1;
             gameVariables.ATP -= 1;
             DOM.displayContainer.textContent="One SER amino acid entered the cell!"
+            display.showVariables();
+            display.turnRed(DOM.atpDisplay);
         }
     }
     
@@ -336,6 +377,8 @@ const gameLogic = {
 const gameController = {
 
 }
+
+display.showVariables()
 
 //buttons for each organelle and a div which brings up the function choices for each organelle as additional buttons
 
