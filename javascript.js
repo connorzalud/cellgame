@@ -89,17 +89,13 @@ DOM.cellMemBtn.addEventListener("click", function(){
                 const btn1 = DOM.createEl("button");
                 const btn2 = DOM.createEl("button");
                 const btn3 = DOM.createEl("button");
-               // const title = DOM.createEl("p");
                 btn1.innerHTML = "SER";
                 btn2.innerHTML = "MET";
                 btn3.innerHTML= "VAL";
-               // title.innerHTML = "Choose an amino acid!"
-              //  title.style.marginBottom = "-50px"
-              //  DOM.displayContainer.append(title);
                 DOM.aminoAcidContainer.append(btn1);
                 DOM.aminoAcidContainer.append(btn2);
                 DOM.aminoAcidContainer.append(btn3);
-                DOM.aminoAcidContainer.classList.add("amino-acid")
+                DOM.aminoAcidContainer.classList.add("amino-acid");
                 DOM.displayContainer.append(DOM.aminoAcidContainer);
                 DOM.aminoAcidBtnCreated = true;
                 btn1.addEventListener("click",function(){
@@ -120,14 +116,10 @@ DOM.cellMemBtn.addEventListener("click", function(){
                     DOM.aminoAcidContainer.remove()
                 })
 
-            }
+            } else if (DOM.aminoAcidBtnCreated){
             
                DOM.displayContainer.innerHTML="";
-               
-            
-            
-           
-           DOM.displayContainer.append(DOM.aminoAcidContainer);
+               DOM.displayContainer.append(DOM.aminoAcidContainer);}
           
 
 
@@ -155,7 +147,7 @@ DOM.nucleusBtn.addEventListener("click",function(){
     DOM.nucleusActionsContainer.classList.add("active");
     DOM.organelleActions.append(DOM.nucleusActionsContainer);
     DOM.nucleusBtnCreated = true;
-        btn2.addEventListener("click",function(){
+    btn2.addEventListener("click",function(){
            if (!DOM.geneBtnCreated){
             const btn1 = DOM.createEl("button");
             const btn2 = DOM.createEl("button");
@@ -170,8 +162,8 @@ DOM.nucleusBtn.addEventListener("click",function(){
             DOM.geneContainer.append(btn2);
             DOM.geneContainer.append(btn3);
             DOM.geneContainer.append(btn4);
-            DOM.geneContainer.classList.add("amino-acid");
-            DOM.displayContainer.append(DOM.geneContainer);
+            DOM.geneContainer.classList.add("gene-class");
+           // DOM.displayContainer.append(DOM.geneContainer);
             DOM.geneBtnCreated = true;
                 btn1.addEventListener("click",function(e){
                     DOM.geneContainer.remove();
@@ -179,7 +171,7 @@ DOM.nucleusBtn.addEventListener("click",function(){
                 })
 
            }
-
+           
            DOM.displayContainer.innerHTML = "";
            DOM.displayContainer.append(DOM.geneContainer);
         })
@@ -188,7 +180,7 @@ DOM.nucleusBtn.addEventListener("click",function(){
 
 
     DOM.cellMemActionsContainer.style.display = "none";
-    DOM.aminoAcidContainer.style.display = "none";
+    DOM.cellMemActionsContainer.style.display = "none";
     DOM.nucleusActionsContainer.style.display = "flex";
     DOM.ribosomeActionsContainer.style.display = "none";
 })
@@ -206,7 +198,10 @@ DOM.ribosomeBtn.addEventListener("click",function(){
         DOM.ribosomeActionsContainer.append(btn2);
         DOM.ribosomeActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.ribosomeActionsContainer);
-        DOM.ribosomeBtnCreated = true
+        DOM.ribosomeBtnCreated = true;
+            btn2.addEventListener("click", function(){
+                ribosome.produceProtein();
+            })
     }
 
     DOM.cellMemActionsContainer.style.display = "none";
@@ -373,7 +368,7 @@ const nucleus = {
 
     checkRNA(gene){
         if(gameVariables.geneCheck===true){
-            console.log(`A gene has already been selected.`)
+            DOM.displayContainer.textContent=`The amino acid sequence for this protein is: ${this.arrayDNA[gameVariables.geneValue]}`
         } else if(gameVariables.ATP>=1 && gene === "0"){
              DOM.displayContainer.textContent = `The DNA is transcribed to RNA. The gene instructs that the following amino acids
             are required to make this protein: ${this.arrayDNA[gene]}`;
