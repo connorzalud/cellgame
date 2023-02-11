@@ -79,6 +79,16 @@ cell-buttons-container button{
     gap:30px;
 }
 
+.gene-class{
+    display:flex;
+    grid-column: 3/4;
+    grid-row:2/3;
+    justify-content: space-around;
+    align-items: center;
+    height:199px;
+    gap:30px;
+}
+
 .display-container{
     display:grid;
     justify-content: center;
