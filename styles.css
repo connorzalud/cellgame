@@ -16,6 +16,7 @@
 .cell-image-container{
     grid-column: 2/3;
     border:1px solid black;
+    
 }
 
 .cell-actions-container{
@@ -27,6 +28,9 @@
     grid-column: 1/2;
     grid-row:2/3;
     border:1px solid black;
+    display:grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
 }
 
 .cell-buttons-container{
@@ -77,4 +81,10 @@ cell-buttons-container button{
     display:grid;
     justify-content: center;
     align-items: center;
+    word-break: break-all;
+    padding: 10px;
+}
+
+.red{
+    color: red;
 }
