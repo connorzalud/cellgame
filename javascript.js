@@ -26,6 +26,11 @@ const DOM = {
     ribosomeBtn: document.querySelector("#ribosome"),
     startBtn: document.querySelector("#start"),
 
+    mitoImg: document.querySelector("#mito-img"),
+    riboImg: document.querySelector("#ribosome-img"),
+    cellMemImg: document.querySelector("#cellMem-img"),
+    nucleusImg: document.querySelector("#nucleus-img"),
+
 
     createEl(element){
         return document.createElement(element)
@@ -66,6 +71,11 @@ DOM.mitoBtn.addEventListener("click", function(){
                 mitochondria.produceATP();
             })
     }
+
+    DOM.mitoImg.style.display = "block";
+    DOM.nucleusImg.style.display = "none";
+    DOM.riboImg.style.display = "none";
+    DOM.cellMemImg.style.display = "none";
 
     DOM.mitoActionsContainer.style.display = "flex";
     DOM.cellMemActionsContainer.style.display = "none";
@@ -156,7 +166,10 @@ DOM.cellMemBtn.addEventListener("click", function(){
         })
     }
 
-    
+    DOM.mitoImg.style.display = "none";
+    DOM.nucleusImg.style.display = "none";
+    DOM.riboImg.style.display = "none";
+    DOM.cellMemImg.style.display = "block";
 
     DOM.mitoActionsContainer.style.display = "none";
     DOM.cellMemActionsContainer.style.display = "flex";
@@ -230,6 +243,10 @@ DOM.nucleusBtn.addEventListener("click",function(){
 
 }
 
+    DOM.mitoImg.style.display = "none";
+    DOM.nucleusImg.style.display = "block";
+    DOM.riboImg.style.display = "none";
+    DOM.cellMemImg.style.display = "none";
 
     DOM.mitoActionsContainer.style.display = "none";
     DOM.cellMemActionsContainer.style.display = "none";
@@ -255,6 +272,12 @@ DOM.ribosomeBtn.addEventListener("click",function(){
                 ribosome.produceProtein();
             })
     }
+
+
+    DOM.mitoImg.style.display = "none";
+    DOM.nucleusImg.style.display = "none";
+    DOM.riboImg.style.display = "block";
+    DOM.cellMemImg.style.display = "none";
 
     DOM.cellMemActionsContainer.style.display = "none";
     DOM.mitoActionsContainer.style.display = "none";
