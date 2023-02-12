@@ -25,6 +25,10 @@
     width:98vw;
 }
 
+.start-container{
+    display:none;
+}
+
 .cell-image-container{
     grid-column: 2/3;
     border:1px solid black;
@@ -117,4 +121,12 @@ cell-buttons-container button{
     height:250px;
     display: none;
     
+}
+
+.return{
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    padding:10px;
 }
