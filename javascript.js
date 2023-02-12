@@ -58,6 +58,13 @@ DOM.mitoBtn.addEventListener("click", function(){
         DOM.mitoActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.mitoActionsContainer);
         DOM.mitoBtnCreated= true;
+            btn1.addEventListener("click", function(){
+                mitochondria.sayDes()
+            })
+
+            btn3.addEventListener("click", function(){
+                mitochondria.produceATP();
+            })
     }
 
     DOM.mitoActionsContainer.style.display = "flex";
@@ -72,23 +79,31 @@ DOM.cellMemBtn.addEventListener("click", function(){
         const btn2 = DOM.createEl("button");
         const btn3 = DOM.createEl("button");
         const btn4 = DOM.createEl("button");
+        const btn5 = DOM.createEl("button");
         btn1.innerHTML = "Des";
-        btn2.innerHTML = "Glucose";
-        btn3.innerHTML = "Amino Acid";
-        btn4.innerHTML = "Oxygen"
+        btn2.innerHTML = "Get Glucose";
+        btn3.innerHTML = "Get Amino Acid";
+        btn4.innerHTML = "Get Oxygen";
+        btn5.innerHTML = "Release Carbon Dioxide";
         btn1.classList.add("btn-action");
         btn2.classList.add("btn-action");
         btn3.classList.add("btn-action");
         btn4.classList.add("btn-action");
+        btn5.classList.add("btn-action");
         DOM.cellMemActionsContainer.append(btn1);
         DOM.cellMemActionsContainer.append(btn2);
         DOM.cellMemActionsContainer.append(btn3);
         DOM.cellMemActionsContainer.append(btn4);
+        DOM.cellMemActionsContainer.append(btn5);
         DOM.cellMemActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.cellMemActionsContainer);
         DOM.cellMemBtnCreated= true;
         btn1.addEventListener("click", function(){
             cellMembrane.sayDes();
+        })
+
+        btn5.addEventListener("click", function(){
+            cellMembrane.releaseCO2();
         })
 
         btn4.addEventListener("click",function(){
@@ -279,13 +294,13 @@ const display = {
 
 const gameVariables = {
     glucose: 1,
-    ATP: 10,
+    ATP: 2,
     oxygen: 1,
     co2: 0,
     proteins: 0,
-    ser: 10,
-    met: 10,
-    val:10,
+    ser: 0,
+    met: 0,
+    val:0,
     geneCheck: false,
     geneValue: 0,
 }
@@ -294,25 +309,34 @@ const gameVariables = {
 const mitochondria ={
     name: "mitochondria",
     sayDes(){
-      console.log(`The ${this.name} is the powerhouse of the cell.`)
+      DOM.displayContainer.textContent=(`The ${this.name} is the powerhouse of the cell.`)
     },
     produceATPInstruct(){
-        console.log(`The ${this.name} can produce ATP. It costs one glucose molecule and one oxygen molecule
-         and produces 3 ATP molecules.`)
+        DOM.displayContainer.textContent=`The ${this.name} can produce ATP. It costs one glucose molecule and one oxygen molecule
+         and produces 3 ATP molecules.`
     },
 
     produceATP(){
-        if(gameVariables.glucose>=1 && gameVariables.oxygen>=1){
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+        }
+        else if(gameVariables.glucose>=1 && gameVariables.oxygen>=1){
+        gameVariables.co2 += 1;
         gameVariables.ATP += 3;
         gameVariables.glucose -= 1;
         gameVariables.oxygen -= 1;
-        console.log("Three ATP produced!")
+        display.showVariables();
+        display.turnGreen(DOM.co2Display);
+        display.turnGreen(DOM.atpDisplay);
+        display.turnRed(DOM.glucoseDisplay);
+        display.turnRed(DOM.oxyDisplay);
+        DOM.displayContainer.textContent = "Three ATP produced!"
         } else if(gameVariables.glucose === 0 && gameVariables.oxygen===0){
-            console.log("Not enough glucose and oxygen!")
+            DOM.displayContainer.textContent="Not enough glucose and oxygen!"
         } else if(gameVariables.glucose === 0){
-            console.log("Not enough glucose!")
+            DOM.displayContainer.textContent="Not enough glucose!"
         } else if (gameVariables.oxygen === 0){
-            console.log("Not enough oxygen!")
+            DOM.displayContainer.textContent="Not enough oxygen!"
         }
     },
 
@@ -324,10 +348,13 @@ const cellMembrane = {
     name: "cell membrane",
     sayDes(){
         DOM.displayContainer.innerHTML = `The ${this.name} surrounds the cell. It also allows materials in and out.`;
-        console.log(`The ${this.name} surrounds the cell. It also allows materials in and out.`)
+        
     },
     getGlucose(){
-        if(gameVariables.ATP >=1){
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+        }
+        else if(gameVariables.ATP >=1){
         gameVariables.ATP -= 1;
         gameVariables.glucose += 1;
         display.showVariables();
@@ -338,13 +365,39 @@ const cellMembrane = {
     },
 
     getAminoAcid(type){
-        if(type === "ser" && gameVariables.ATP>=1){
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+        }
+
+        else if (gameVariables.ATP === 0){
+            DOM.displayContainer.textContent = "Not enough ATP!"
+        }
+
+       else if(type === "ser" && gameVariables.ATP>=1){
             gameVariables.ser += 1;
             gameVariables.ATP -= 1;
             DOM.displayContainer.innerHTML="One SER amino acid entered the cell!"
             display.showVariables();
             display.turnRed(DOM.atpDisplay);
             display.turnGreen(DOM.serDisplay);
+        }
+
+        else if(type === "met" && gameVariables.ATP >=1){
+            gameVariables.met += 1;
+            gameVariables.ATP -= 1;
+            DOM.displayContainer.innerHTML="One MET amino acid entered the cell!"
+            display.showVariables();
+            display.turnRed(DOM.atpDisplay);
+            display.turnGreen(DOM.metDisplay);
+        }
+
+        else if (type === "val" && gameVariables.ATP >= 1){
+            gameVariables.val += 1;
+            gameVariables.ATP -= 1;
+            DOM.displayContainer.innerHTML="One VAL amino acid entered the cell!"
+            display.showVariables();
+            display.turnRed(DOM.atpDisplay);
+            display.turnGreen(DOM.valDisplay);
         }
     },
     
@@ -353,6 +406,13 @@ const cellMembrane = {
         gameVariables.oxygen += 1;
         display.showVariables();
         display.turnGreen(DOM.oxyDisplay);
+    },
+
+    releaseCO2(){
+        DOM.displayContainer.textContent = "All carbon dioxide has been released!"
+        gameVariables.co2 = 0;
+        display.showVariables();
+        display.turnRed(DOM.co2Display);
     }
 
 }
@@ -362,12 +422,20 @@ const cellMembrane = {
 const ribosome = {
     name: "ribosome",
     sayDes(){
-        console.log(`The ${this.name} uses amino acids to produce proteins.`)
+        DOM.displayContainer.textContent=(`The ${this.name} uses amino acids to produce proteins.`)
     },
 
     produceProtein(){
-        if(gameVariables.geneCheck===false){
-            console.log("Select a gene first.")
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+        }
+
+        else if(gameVariables.ATP === 0){
+            DOM.displayContainer.textContent = "Not enough ATP!"
+        }
+
+       else if(gameVariables.geneCheck===false){
+            DOM.displayContainer.textContent="Select a gene first."
         } else if(gameVariables.geneCheck===true){
             let serCheck = 0;
             let metCheck = 0;
@@ -395,16 +463,30 @@ const ribosome = {
                console.log(userAminoAcid);
                for(i=0; i<userAminoAcid.length; i++){
                 if(userAminoAcid[i]!==nucleus.arrayDNA[gameVariables.geneValue][i]){
-                   return console.log("Wrong order.")
+                   return DOM.displayContainer.textContent=("Wrong order.")
                 } 
                 
-               }console.log("Protein produced!")
+               }DOM.displayContainer.textContent=("Protein produced!")
                 gameVariables.geneCheck = false;
                 gameVariables.ser -= serCheck;
                 gameVariables.met -= metCheck;
                 gameVariables.val -= valCheck;
+                gameVariables.ATP -= 1;
+                gameVariables.proteins += 1;
+                display.showVariables();
+                display.turnRed(DOM.atpDisplay);
+                if(serCheck >0){
+                    display.turnRed(DOM.serDisplay)
+                }
+                if(metCheck >0){
+                    display.turnRed(DOM.metDisplay)
+                }
+                if(valCheck>0){
+                    display.turnRed(DOM.valDisplay)
+                }
+                display.turnGreen(DOM.proDisplay);
             } else{
-                console.log("Missing necessary amino acids.")
+                DOM.displayContainer.textContent=("Missing necessary amino acids.")
             }
         }
     }
@@ -413,20 +495,44 @@ const ribosome = {
 const nucleus = {
     name: "nucleus",
     sayDes(){
-        console.log(`Ths ${this.name} is the control center of the cell. The DNA is stored here.`)
+        DOM.displayContainer.textContent=(`Ths ${this.name} is the control center of the cell. The DNA is stored here.`)
     },
 
     arrayDNA: [["SER","MET","VAL"],["SER", "SER", "MET"],["MET", "VAL", "VAL"],["SER", "MET" ,"MET"]],
 
     checkRNA(gene){
-        if(gameVariables.geneCheck===true){
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+        }
+       else if(gameVariables.geneCheck===true){
             DOM.displayContainer.textContent=`The amino acid sequence for this protein is: ${this.arrayDNA[gameVariables.geneValue]}`
-        } else if(gameVariables.ATP>=1 && gene === "0"){
+        } else if(gameVariables.ATP === 0){
+            DOM.displayContainer.textContent = "Not enough ATP!"
+        }
+        else if(gameVariables.ATP>=1 && gene === "0"){
              DOM.displayContainer.textContent = `The DNA is transcribed to RNA. The gene instructs that the following amino acids
             are required to make this protein: ${this.arrayDNA[gene]}`;
                  gameVariables.ATP -= 1;
                  gameVariables.geneCheck=true;
                  gameVariables.geneValue = 0;
+        } else if (gameVariables.ATP>=1 && gene === "1"){
+            DOM.displayContainer.textContent = `The DNA is transcribed to RNA. The gene instructs that the following amino acids
+            are required to make this protein: ${this.arrayDNA[gene]}`;
+            gameVariables.ATP -= 1;
+            gameVariables.geneCheck = true;
+            gameVariables.geneValue = 1;
+        } else if (gameVariables.ATP >=1 && gene === "2"){
+            DOM.displayContainer.textContent = `The DNA is transcribed to RNA. The gene instructs that the following amino acids
+            are required to make this protein: ${this.arrayDNA[gene]}`;
+            gameVariables.ATP -= 1;
+            gameVariables.geneCheck = true;
+            gameVariables.geneValue = 2;
+        } else if (gameVariables.ATP >= 1 && gene === "3"){
+            DOM.displayContainer.textContent = `The DNA is transcribed to RNA. The gene instructs that the following amino acids
+            are required to make this protein: ${this.arrayDNA[gene]}`;
+            gameVariables.ATP -= 1;
+            gameVariables.geneCheck = true;
+            gameVariables.geneValue = 3;
         }
     },
 
