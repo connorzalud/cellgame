@@ -25,6 +25,8 @@ const DOM = {
     nucleusBtn: document.querySelector("#nucleus"),
     ribosomeBtn: document.querySelector("#ribosome"),
     startBtn: document.querySelector("#start"),
+    startContainer: document.querySelector(".start-container"),
+    returnBtn:document.querySelector("#back-button"),
 
     mitoImg: document.querySelector("#mito-img"),
     riboImg: document.querySelector("#ribosome-img"),
@@ -45,6 +47,18 @@ const DOM = {
     aminoAcidText: false,
     geneBtnCreated:false,
 }
+
+DOM.startBtn.addEventListener("click", function(){
+    DOM.startContainer.style.display = "block";
+    DOM.mainContainer.style.display = "none";
+    DOM.returnBtn.addEventListener("click", function(){
+        DOM.startContainer.style.display = "none";
+        DOM.mainContainer.style.display="grid";
+    })
+    
+    
+
+})
 
 DOM.mitoBtn.addEventListener("click", function(){
     if(!DOM.mitoBtnCreated){
