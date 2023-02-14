@@ -71,8 +71,8 @@ DOM.mitoBtn.addEventListener("click", function(){
         btn1.classList.add("btn-action");
         btn2.classList.add("btn-action");
         btn3.classList.add("btn-action");
-        DOM.mitoActionsContainer.append(btn1);
-        DOM.mitoActionsContainer.append(btn2);
+       // DOM.mitoActionsContainer.append(btn1);
+        //DOM.mitoActionsContainer.append(btn2);
         DOM.mitoActionsContainer.append(btn3);
         DOM.mitoActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.mitoActionsContainer);
@@ -114,7 +114,7 @@ DOM.cellMemBtn.addEventListener("click", function(){
         btn3.classList.add("btn-action");
         btn4.classList.add("btn-action");
         btn5.classList.add("btn-action");
-        DOM.cellMemActionsContainer.append(btn1);
+      //  DOM.cellMemActionsContainer.append(btn1);
         DOM.cellMemActionsContainer.append(btn2);
         DOM.cellMemActionsContainer.append(btn3);
         DOM.cellMemActionsContainer.append(btn4);
@@ -199,7 +199,7 @@ DOM.nucleusBtn.addEventListener("click",function(){
     btn2.innerHTML = "Check Gene"
     btn1.classList.add("btn-action");
     btn2.classList.add("btn-action");
-    DOM.nucleusActionsContainer.append(btn1);
+   // DOM.nucleusActionsContainer.append(btn1);
     DOM.nucleusActionsContainer.append(btn2);
     DOM.nucleusActionsContainer.classList.add("active");
     DOM.organelleActions.append(DOM.nucleusActionsContainer);
@@ -277,7 +277,7 @@ DOM.ribosomeBtn.addEventListener("click",function(){
         btn2.innerHTML= "Produce Protein";
         btn1.classList.add("btn-action");
         btn2.classList.add("btn-action");
-        DOM.ribosomeActionsContainer.append(btn1);
+      //  DOM.ribosomeActionsContainer.append(btn1);
         DOM.ribosomeActionsContainer.append(btn2);
         DOM.ribosomeActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.ribosomeActionsContainer);
