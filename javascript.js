@@ -86,6 +86,7 @@ DOM.mitoBtn.addEventListener("click", function(){
             })
     }
 
+    DOM.displayContainer.innerHTML = " "
     DOM.mitoImg.style.display = "block";
     DOM.nucleusImg.style.display = "none";
     DOM.riboImg.style.display = "none";
