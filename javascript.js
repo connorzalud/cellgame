@@ -341,6 +341,8 @@ const gameVariables = {
     val:0,
     geneCheck: false,
     geneValue: 0,
+    DNACheck: false,
+    DNAString: " ",
 }
 
 
@@ -579,25 +581,53 @@ const nucleus = {
     },
 
     getDNA(){
-        let codons = [];
+        let codons = ["TAC"];
         for(i=0; i<3; i++)
         {
             randomCodon = [];
             for(j=0; j<3; j++){
                 let randomBase = this.arrayDNAbases[Math.floor(Math.random()*this.arrayDNAbases.length)];
-                console.log(randomBase)
+                
                 randomCodon.push(randomBase);
-            }
-        codons.push(randomCodon);    
 
+            }
+        codons.push(randomCodon.join(''));    
+
+          }
+
+        for(i=1; i<5; i++){
+            if(codons[i]=== "TAC" || codons[i] === "UAA" || codons[i] === "UAG" || codons[i]=== "UGA"){
+                codons[i] = "CCC"
+            }
         }
 
-        console.log(codons);
+        gameVariables.DNAString = codons;
         return codons
 
-    }
+    },
 
-    
+    transcribeDNA(){
+        dnaCodons = gameVariables.DNAString;
+        console.log(dnaCodons);
+        rnaCodons = [];
+        for (const dnaCodon of dnaCodons) {
+            const userInput = prompt(`Transcribe the DNA codon "${dnaCodon}" to RNA:`);
+            const rnaMapping = { 'A': 'U', 'T': 'A', 'C': 'G', 'G': 'C' };
+            const transcribedRNA = dnaCodon.split('').map(nucleotide => rnaMapping[nucleotide]).join('');
+        
+            if (userInput.toUpperCase() === transcribedRNA) {
+              rnaCodons.push(transcribedRNA);
+              alert('Correct transcription!');
+            } else {
+              alert(`Incorrect transcription for "${dnaCodon}"`);
+              return; 
+            }
+          }
+        
+          return rnaCodons;
+
+
+    }
 }
 
 
