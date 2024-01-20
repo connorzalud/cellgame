@@ -538,6 +538,10 @@ const nucleus = {
 
     arrayDNA: [["SER","MET","VAL"],["SER", "SER", "MET"],["MET", "VAL", "VAL"],["SER", "MET" ,"MET"]],
 
+    arrayDNAbases: ["A", "T", "C", "G"],
+
+    arrayRNAbases: ["A", "U", "C", "G"],
+
     checkRNA(gene){
         if(gameVariables.co2 === 5){
             DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
@@ -573,6 +577,25 @@ const nucleus = {
             gameVariables.geneValue = 3;
         }
     },
+
+    getDNA(){
+        let codons = [];
+        for(i=0; i<3; i++)
+        {
+            randomCodon = [];
+            for(j=0; j<3; j++){
+                let randomBase = this.arrayDNAbases[Math.floor(Math.random()*this.arrayDNAbases.length)];
+                console.log(randomBase)
+                randomCodon.push(randomBase);
+            }
+        codons.push(randomCodon);    
+
+        }
+
+        console.log(codons);
+        return codons
+
+    }
 
     
 }
