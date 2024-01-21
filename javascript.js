@@ -343,6 +343,13 @@ const gameVariables = {
     geneValue: 0,
     DNACheck: false,
     DNAString: " ",
+    RNAcheck: false,
+    RNAstring: ["AUG", "AGU", "GUU", "AAA"],
+    aminoAcids: {
+        "MET":1,
+        "SER":1,
+        "VAL":0
+    },
 }
 
 
@@ -529,6 +536,61 @@ const ribosome = {
                 DOM.displayContainer.textContent=("Missing necessary amino acids.")
             }
         }
+    },
+
+    produceProtein2(){        
+        rnaCodons = gameVariables.RNAstring;
+        rnaCodonToAminoAcidMapping = {
+            "AUG": "MET",
+            "AGU": "SER",
+            "GUU": "VAL",
+            "AAA": "SER"
+        }
+        translatedAminoAcids = [];
+
+       /* for (rnaCodon of rnaCodons){
+            metCheck = 0;
+            correctAminoAcid = rnaCodonToAminoAcidMapping[rnaCodon];
+            console.log(correctAminoAcid);
+            if(correctAminoAcid === "MET"){
+                metCheck +=1;
+            }
+            if(correctAminoAcid >= gameVariables.aminoAcids[correctAminoAcid]){
+                continue;
+            } else{
+                alert(`Not enough ${correctAminoAcid}.`)
+            }
+        }*/
+
+        aminoacidOccur = {
+
+        }
+
+        for (let i = 0; i < rnaCodons.length; i++) {
+            let rnaCodon = rnaCodons[i];
+            console.log(rnaCodon[i]);
+            let correctAminoAcid = rnaCodonToAminoAcidMapping[rnaCodon];
+            console.log(correctAminoAcid);
+
+            if(!aminoacidOccur[correctAminoAcid]){
+                aminoacidOccur[correctAminoAcid] = 1
+            } else{
+                aminoacidOccur[correctAminoAcid]++
+            }
+            
+            if (!gameVariables.aminoAcids[correctAminoAcid] || gameVariables.aminoAcids[correctAminoAcid] < aminoacidOccur[correctAminoAcid]) {
+                alert(`You don't have enough ${correctAminoAcid}. Please obtain more.`);
+               
+             
+              
+          }
+             
+              
+          }
+        
+        
+        
+          
     }
 }
 
@@ -624,6 +686,7 @@ const nucleus = {
             }
           }
         
+          gameVariables.RNAstring = rnaCodons;
           return rnaCodons;
 
 
