@@ -27,6 +27,8 @@ const DOM = {
     startBtn: document.querySelector("#start"),
     startContainer: document.querySelector(".start-container"),
     returnBtn:document.querySelector("#back-button"),
+    aminoacidName: document.querySelector("#aminoacidsname"),
+    aminoacidSelect: document.querySelector("#selectaminoacid"),
 
     mitoImg: document.querySelector("#mito-img"),
     riboImg: document.querySelector("#ribosome-img"),
@@ -105,21 +107,25 @@ DOM.cellMemBtn.addEventListener("click", function(){
         const btn3 = DOM.createEl("button");
         const btn4 = DOM.createEl("button");
         const btn5 = DOM.createEl("button");
+        const btn6 = DOM.createEl("button");
         btn1.innerHTML = "Des";
         btn2.innerHTML = "Get Glucose";
         btn3.innerHTML = "Get Amino Acid";
         btn4.innerHTML = "Get Oxygen";
         btn5.innerHTML = "Release Carbon Dioxide";
+        btn6.innerHTML = "Get an Amino Acid";
         btn1.classList.add("btn-action");
         btn2.classList.add("btn-action");
         btn3.classList.add("btn-action");
         btn4.classList.add("btn-action");
         btn5.classList.add("btn-action");
+        btn6.classList.add("btn-action");
       //  DOM.cellMemActionsContainer.append(btn1);
         DOM.cellMemActionsContainer.append(btn2);
         DOM.cellMemActionsContainer.append(btn3);
         DOM.cellMemActionsContainer.append(btn4);
         DOM.cellMemActionsContainer.append(btn5);
+        DOM.cellMemActionsContainer.append(btn6);
         DOM.cellMemActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.cellMemActionsContainer);
         DOM.cellMemBtnCreated= true;
@@ -133,6 +139,14 @@ DOM.cellMemBtn.addEventListener("click", function(){
 
         btn4.addEventListener("click",function(){
             cellMembrane.getOxygen();
+        })
+
+        btn6.addEventListener("click", function(){
+            DOM.aminoacidSelect.addEventListener("click", function(){
+                type = DOM.aminoacidName.value;
+                cellMembrane.getAminoAcid2(type);
+
+            })
         })
 
         btn2.addEventListener("click", function(){
@@ -344,7 +358,7 @@ const gameVariables = {
     DNACheck: false,
     DNAString: " ",
     RNAcheck: false,
-    RNAstring: ["UAC", "GUG", "CAA"],
+    RNAstring: ["UAC","GGA","CCA","CGA"],
     aminoAcids: {
         "Phe": 0,
         "Leu": 0,
@@ -465,6 +479,20 @@ const cellMembrane = {
         }
     },
     
+    getAminoAcid2(type){
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+        }
+
+        else if (gameVariables.ATP === 0){
+            DOM.displayContainer.textContent = "Not enough ATP!"
+        }
+
+       else {
+        gameVariables.aminoAcids[type] += 1
+       }
+    },
+
     getOxygen(){
         DOM.displayContainer.innerHTML = "One oxygen molecule entered the cell!"
         gameVariables.oxygen += 1;
@@ -618,22 +646,12 @@ const ribosome = {
         }
         translatedAminoAcids = [];
 
-       /* for (rnaCodon of rnaCodons){
-            metCheck = 0;
-            correctAminoAcid = rnaCodonToAminoAcidMapping[rnaCodon];
-            console.log(correctAminoAcid);
-            if(correctAminoAcid === "MET"){
-                metCheck +=1;
-            }
-            if(correctAminoAcid >= gameVariables.aminoAcids[correctAminoAcid]){
-                continue;
-            } else{
-                alert(`Not enough ${correctAminoAcid}.`)
-            }
-        }*/
-
         aminoacidOccur = {
 
+        }
+
+        aminoAcidNames = {
+        
         }
 
         for (let i = 0; i < rnaCodons.length; i++) {
@@ -641,6 +659,9 @@ const ribosome = {
             console.log(rnaCodon[i]);
             let correctAminoAcid = rnaCodonToAminoAcidMapping[rnaCodon];
             console.log(correctAminoAcid);
+
+            aminoAcidNames[i] = correctAminoAcid;
+            console.log(aminoAcidNames);
 
             if(!aminoacidOccur[correctAminoAcid]){
                 aminoacidOccur[correctAminoAcid] = 1
