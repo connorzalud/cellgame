@@ -130,3 +130,7 @@ cell-buttons-container button{
     justify-content: center;
     padding:10px;
 }
+
+.aminoacid-select-container{
+    display:none;
+}
