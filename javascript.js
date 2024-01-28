@@ -30,6 +30,32 @@ const DOM = {
     aminoacidName: document.querySelector("#aminoacidsname"),
     aminoacidSelect: document.querySelector("#selectaminoacid"),
     aminoacidSelectContainer:document.querySelector(".aminoacid-select-container"),
+    pheDisplay:document.querySelector("#phe1"),
+    leuDisplay:document.querySelector("#leu"),
+    ileDisplay:document.querySelector("#ile"),
+    metDisplay:document.querySelector("#met"),
+    valDisplay:document.querySelector("#val"),
+    serDisplay:document.querySelector("#ser"),
+    prolDisplay:document.querySelector("#pro"),
+    thrDisplay:document.querySelector("#thr"),
+    alaDisplay:document.querySelector("#ala"),
+    tyrDisplay:document.querySelector("#tyr"),
+    hisDisplay:document.querySelector("#his"),
+    ginDisplay:document.querySelector("#gin"),
+    asnDisplay:document.querySelector("#asn"),
+    lysDisplay:document.querySelector("#lys"),
+    aspDisplay:document.querySelector("#asp"),
+    gluDisplay:document.querySelector("#glu"),
+    cysDisplay:document.querySelector("#cys"),
+    trpDisplay:document.querySelector("#trp"),
+    argDisplay:document.querySelector("#arg"),
+    glyDisplay:document.querySelector("#gly"),
+
+    dnaStrand:document.querySelector("#dna"),
+    rnaStrand:document.querySelector("#rna"),
+    aminoAcidstrand:document.querySelector("#amino-sequence"),
+    completeProteins:document.querySelector("#complete-proteins"),
+
 
     mitoImg: document.querySelector("#mito-img"),
     riboImg: document.querySelector("#ribosome-img"),
@@ -327,10 +353,29 @@ const display = {
         DOM.atpDisplay.innerHTML = `<b>ATP</b>: ${gameVariables.ATP}`;
         DOM.oxyDisplay.innerHTML = `<b>Oxygen</b>: ${gameVariables.oxygen}`;
         DOM.co2Display.innerHTML = `<b>Carbon Dioxide</b>: ${gameVariables.co2}`;
-        DOM.proDisplay.innerHTML = `<b>Proteins</b>: ${gameVariables.proteins}`;
-        DOM.metDisplay.innerHTML = `<b>MET</b>: ${gameVariables.met}`;
-        DOM.valDisplay.innerHTML = `<b>VAL</b>: ${gameVariables.val}`;
-        DOM.serDisplay.innerHTML = `<b>SER</b>: ${gameVariables.ser}`;
+        DOM.pheDisplay.innerHTML = `<b>Phe</b>:${gameVariables.aminoAcids["Phe"]}`;
+        DOM.leuDisplay.innerHTML = `<b>Leu</b>:${gameVariables.aminoAcids["Leu"]}`;
+        DOM.ileDisplay.innerHTML = `<b>Ile</b>:${gameVariables.aminoAcids["Ile"]}`;
+        DOM.metDisplay.innerHTML = `<b>Met</b>:${gameVariables.aminoAcids["Met"]}`;
+        DOM.valDisplay.innerHTML = `<b>Val</b>:${gameVariables.aminoAcids["Val"]}`;
+        DOM.serDisplay.innerHTML = `<b>Ser</b>:${gameVariables.aminoAcids["Ser"]}`;
+        DOM.prolDisplay.innerHTML = `<b>Pro</b>:${gameVariables.aminoAcids["Pro"]}`;
+        DOM.thrDisplay.innerHTML = `<b>Thr</b>:${gameVariables.aminoAcids["Thr"]}`;
+        DOM.alaDisplay.innerHTML = `<b>Ala</b>:${gameVariables.aminoAcids["Ala"]}`;
+        DOM.tyrDisplay.innerHTML = `<b>Tyr</b>:${gameVariables.aminoAcids["Tyr"]}`;
+        DOM.hisDisplay.innerHTML = `<b>His</b>:${gameVariables.aminoAcids["His"]}`;
+        DOM.ginDisplay.innerHTML = `<b>Gin</b>:${gameVariables.aminoAcids["Gin"]}`;
+        DOM.asnDisplay.innerHTML = `<b>Asn</b>:${gameVariables.aminoAcids["Asn"]}`;
+        DOM.lysDisplay.innerHTML = `<b>Lys</b>:${gameVariables.aminoAcids["Lys"]}`;
+        DOM.aspDisplay.innerHTML = `<b>Asp</b>:${gameVariables.aminoAcids["Asp"]}`;
+        DOM.gluDisplay.innerHTML = `<b>Glu</b>:${gameVariables.aminoAcids["Glu"]}`;
+        DOM.cysDisplay.innerHTML = `<b>Cys</b>:${gameVariables.aminoAcids["Cys"]}`;
+        DOM.trpDisplay.innerHTML = `<b>Trp</b>:${gameVariables.aminoAcids["Trp"]}`;
+        DOM.argDisplay.innerHTML = `<b>Arg</b>:${gameVariables.aminoAcids["Arg"]}`;
+        DOM.glyDisplay.innerHTML = `<b>Gly</b>:${gameVariables.aminoAcids["Gly"]}`;
+        DOM.dnaStrand.innerHTML = `<b>DNA</b>: ${gameVariables.DNAString}`;
+        DOM.rnaStrand.innerHTML = `<b>RNA</b>: ${gameVariables.RNAstring}`;
+        DOM.aminoAcidstrand.innerHTML = `<b>Amino Acids</b>:`;
     },
 
     turnRed(div){
@@ -366,16 +411,16 @@ const gameVariables = {
     RNAcheck: false,
     RNAstring: ["UAC","GGA","CCA","CGA"],
     aminoAcids: {
-        "Phe": 0,
+        "Phe": 3,
         "Leu": 0,
         "Ile": 0,
         "Met": 0,
         "Val": 0,
         "Ser": 0,
-        "Pro": 0,
+        "Pro": 2,
         "Thr": 0,
         "Ala": 0,
-        "Tyr": 0,
+        "Tyr": 2,
         "His": 0,
         "Gin": 0,
         "Asn": 0,
@@ -384,8 +429,8 @@ const gameVariables = {
         "Glu": 0,
         "Cys": 0,
         "Trp": 0,
-        "Arg": 0,
-        "Gly": 0
+        "Arg": 2,
+        "Gly": 2
     },
 }
 
@@ -497,6 +542,7 @@ const cellMembrane = {
        else {
         DOM.displayContainer.textContent = `You gained one ${type} amino acid!`;
         gameVariables.aminoAcids[type] += 1
+        display.showVariables();
        }
     },
 
@@ -592,6 +638,9 @@ const ribosome = {
 
     produceProtein2(){        
         rnaCodons = gameVariables.RNAstring;
+        let aminoAcidCount = false;
+        translatedCheck = false;
+        console.log(aminoAcidCount);
         rnaCodonToAminoAcidMapping = {
             "UUU": "Phe",
             "UUC": "Phe",
@@ -678,13 +727,50 @@ const ribosome = {
             
             if (!gameVariables.aminoAcids[correctAminoAcid] || gameVariables.aminoAcids[correctAminoAcid] < aminoacidOccur[correctAminoAcid]) {
                 alert(`You don't have enough ${correctAminoAcid}. Please obtain more.`);
-               
+                return 
+          } else{
+            aminoAcidCount = true;
+          } 
+
+
              
               
           }
-             
-              
-          }
+
+          if(aminoAcidCount){
+            for (i=0; i<rnaCodons.length;i++){
+            rnaCodon = rnaCodons[i];
+            translatedAminoAcids.push(rnaCodonToAminoAcidMapping[rnaCodon]);
+            console.log(translatedAminoAcids);
+            translatedCheck = true;
+
+          } 
+        }
+
+        if(translatedCheck){
+
+            let userAminoAcids = [];
+          userAminoAcids.push(prompt("First Amino Acid?"))
+          userAminoAcids.push(prompt("Second Amino Acid?"))
+          userAminoAcids.push(prompt("Third Amino Acid?"))
+          userAminoAcids.push(prompt("Fourth Amino Acid?"))
+          console.log(userAminoAcids);
+
+            for(i=0;i<translatedAminoAcids.length;i++){
+            if(userAminoAcids[i]===translatedAminoAcids[i]) {
+                console.log("Congrats!")
+                DOM.displayContainer.innerHTML="You did it!"
+
+            } else{
+                console.log("Boo")
+            }
+            }
+            
+        }
+          
+
+           
+          
         
         
         
