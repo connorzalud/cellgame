@@ -375,7 +375,7 @@ const display = {
         DOM.glyDisplay.innerHTML = `<b>Gly</b>:${gameVariables.aminoAcids["Gly"]}`;
         DOM.dnaStrand.innerHTML = `<b>DNA</b>: ${gameVariables.DNAString}`;
         DOM.rnaStrand.innerHTML = `<b>RNA</b>: ${gameVariables.RNAstring}`;
-        DOM.aminoAcidstrand.innerHTML = `<b>Amino Acids</b>:`;
+        DOM.aminoAcidstrand.innerHTML = `<b>Amino Acids</b>: ${gameVariables.finalAminoAcids}`;
     },
 
     turnRed(div){
@@ -409,7 +409,7 @@ const gameVariables = {
     DNACheck: false,
     DNAString: " ",
     RNAcheck: false,
-    RNAstring: ["UAC","GGA","CCA","CGA"],
+    RNAstring: ["UAC","CCA","CCA","CCA"],
     aminoAcids: {
         "Phe": 3,
         "Leu": 0,
@@ -417,7 +417,7 @@ const gameVariables = {
         "Met": 0,
         "Val": 0,
         "Ser": 0,
-        "Pro": 2,
+        "Pro": 3,
         "Thr": 0,
         "Ala": 0,
         "Tyr": 2,
@@ -432,6 +432,7 @@ const gameVariables = {
         "Arg": 2,
         "Gly": 2
     },
+    finalAminoAcids: [],
 }
 
 
@@ -640,6 +641,7 @@ const ribosome = {
         rnaCodons = gameVariables.RNAstring;
         let aminoAcidCount = false;
         translatedCheck = false;
+        finalCheck = false;
         console.log(aminoAcidCount);
         rnaCodonToAminoAcidMapping = {
             "UUU": "Phe",
@@ -727,21 +729,21 @@ const ribosome = {
             
             if (!gameVariables.aminoAcids[correctAminoAcid] || gameVariables.aminoAcids[correctAminoAcid] < aminoacidOccur[correctAminoAcid]) {
                 alert(`You don't have enough ${correctAminoAcid}. Please obtain more.`);
+                console.log(aminoAcidCount);
+                console.log(translatedCheck);
                 return 
           } else{
             aminoAcidCount = true;
-          } 
+            console.log(aminoacidOccur)
 
-
-             
-              
+          }     
           }
 
           if(aminoAcidCount){
             for (i=0; i<rnaCodons.length;i++){
             rnaCodon = rnaCodons[i];
             translatedAminoAcids.push(rnaCodonToAminoAcidMapping[rnaCodon]);
-            console.log(translatedAminoAcids);
+            console.log(translatedAminoAcids);   
             translatedCheck = true;
 
           } 
@@ -759,22 +761,34 @@ const ribosome = {
             for(i=0;i<translatedAminoAcids.length;i++){
             if(userAminoAcids[i]===translatedAminoAcids[i]) {
                 console.log("Congrats!")
-                DOM.displayContainer.innerHTML="You did it!"
-
-            } else{
-                console.log("Boo")
+                finalCheck = true;
+                } else{
+                DOM.displayContainer.innerHTML = "No good."
+                console.log(finalCheck);
             }
             }
             
         }
-          
+          console.log(finalCheck);
 
-           
-          
-        
-        
-        
-          
+        if(finalCheck){
+            console.log("hello");
+            console.log(translatedAminoAcids)
+            for(i=0;i<translatedAminoAcids.length;i++){
+                rnaCodon = rnaCodons[i];
+                let correctAminoAcid = rnaCodonToAminoAcidMapping[rnaCodon];
+                console.log(aminoacidOccur[correctAminoAcid]);
+
+                if(aminoacidOccur[correctAminoAcid]>1){
+                    aminoacidOccur[correctAminoAcid] = 1
+                }
+            gameVariables.aminoAcids[correctAminoAcid] -= aminoacidOccur[correctAminoAcid]; 
+            gameVariables.finalAminoAcids = translatedAminoAcids;
+            DOM.displayContainer.innerHTML="You did it!"
+            display.showVariables();
+
+            }
+        }    
     }
 }
 
