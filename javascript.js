@@ -31,25 +31,25 @@ const DOM = {
     aminoacidSelect: document.querySelector("#selectaminoacid"),
     aminoacidSelectContainer:document.querySelector(".aminoacid-select-container"),
     PheDisplay:document.querySelector("#phe1"),
-    leuDisplay:document.querySelector("#leu"),
-    ileDisplay:document.querySelector("#ile"),
-    metDisplay:document.querySelector("#met"),
-    valDisplay:document.querySelector("#val"),
-    serDisplay:document.querySelector("#ser"),
+    LeuDisplay:document.querySelector("#leu"),
+    IleDisplay:document.querySelector("#ile"),
+    MetDisplay:document.querySelector("#met"),
+    ValDisplay:document.querySelector("#val"),
+    SerDisplay:document.querySelector("#ser"),
     ProDisplay:document.querySelector("#pro"),
-    thrDisplay:document.querySelector("#thr"),
-    alaDisplay:document.querySelector("#ala"),
+    ThrDisplay:document.querySelector("#thr"),
+    AlaDisplay:document.querySelector("#ala"),
     TyrDisplay:document.querySelector("#tyr"),
-    hisDisplay:document.querySelector("#his"),
-    ginDisplay:document.querySelector("#gin"),
-    asnDisplay:document.querySelector("#asn"),
-    lysDisplay:document.querySelector("#lys"),
-    aspDisplay:document.querySelector("#asp"),
-    gluDisplay:document.querySelector("#glu"),
-    cysDisplay:document.querySelector("#cys"),
-    trpDisplay:document.querySelector("#trp"),
-    argDisplay:document.querySelector("#arg"),
-    glyDisplay:document.querySelector("#gly"),
+    HisDisplay:document.querySelector("#his"),
+    GinDisplay:document.querySelector("#gin"),
+    AsnDisplay:document.querySelector("#asn"),
+    LysDisplay:document.querySelector("#lys"),
+    AspDisplay:document.querySelector("#asp"),
+    GluDisplay:document.querySelector("#glu"),
+    CysDisplay:document.querySelector("#cys"),
+    TrpDisplay:document.querySelector("#trp"),
+    ArgDisplay:document.querySelector("#arg"),
+    GlyDisplay:document.querySelector("#gly"),
 
     dnaStrand:document.querySelector("#dna"),
     rnaStrand:document.querySelector("#rna"),
@@ -246,12 +246,20 @@ DOM.nucleusBtn.addEventListener("click",function(){
     if(!DOM.nucleusBtnCreated){
     const btn1 = DOM.createEl("button");
     const btn2 = DOM.createEl("button");
+    const btn3 = DOM.createEl("button");
+    const btn4 = DOM.createEl("button");
     btn1.innerHTML = "Say Des";
-    btn2.innerHTML = "Check Gene"
+    btn2.innerHTML = "Check Gene";
+    btn3.innerHTML = "Get DNA";
+    btn4.innerHTML = "Transcribe DNA";
     btn1.classList.add("btn-action");
     btn2.classList.add("btn-action");
+    btn3.classList.add("btn-action");
+    btn4.classList.add("btn-action");
    // DOM.nucleusActionsContainer.append(btn1);
     DOM.nucleusActionsContainer.append(btn2);
+    DOM.nucleusActionsContainer.append(btn3);
+    DOM.nucleusActionsContainer.append(btn4);
     DOM.nucleusActionsContainer.classList.add("active");
     DOM.organelleActions.append(DOM.nucleusActionsContainer);
     DOM.nucleusBtnCreated = true;
@@ -306,6 +314,16 @@ DOM.nucleusBtn.addEventListener("click",function(){
            DOM.displayContainer.append(DOM.geneContainer);}
         })
 
+        btn3.addEventListener("click", function(){
+            nucleus.getDNA();
+            display.showVariables();
+        })
+
+        btn4.addEventListener("click", function(){
+            nucleus.transcribeDNA();
+            display.showVariables();
+        })
+
 }
 
     DOM.mitoImg.style.display = "none";
@@ -324,17 +342,25 @@ DOM.ribosomeBtn.addEventListener("click",function(){
     if(!DOM.ribosomeBtnCreated){
         const btn1 = DOM.createEl("button");
         const btn2 = DOM.createEl("button");
+        const btn3 = DOM.createEl("button");
         btn1.innerHTML = "Say Des";
         btn2.innerHTML= "Produce Protein";
+        btn3.innerHTML= "Produce Protein2";
         btn1.classList.add("btn-action");
         btn2.classList.add("btn-action");
+        btn3.classList.add("btn-action");
       //  DOM.ribosomeActionsContainer.append(btn1);
         DOM.ribosomeActionsContainer.append(btn2);
+        DOM.ribosomeActionsContainer.append(btn3);
         DOM.ribosomeActionsContainer.classList.add("active");
         DOM.organelleActions.append(DOM.ribosomeActionsContainer);
         DOM.ribosomeBtnCreated = true;
             btn2.addEventListener("click", function(){
                 ribosome.produceProtein();
+            })
+
+            btn3.addEventListener("click", function(){
+                ribosome.produceProtein2();
             })
     }
 
@@ -358,25 +384,25 @@ const display = {
         DOM.oxyDisplay.innerHTML = `<b>Oxygen</b>: ${gameVariables.oxygen}`;
         DOM.co2Display.innerHTML = `<b>Carbon Dioxide</b>: ${gameVariables.co2}`;
         DOM.PheDisplay.innerHTML = `<b>Phe</b>:${gameVariables.aminoAcids["Phe"]}`;
-        DOM.leuDisplay.innerHTML = `<b>Leu</b>:${gameVariables.aminoAcids["Leu"]}`;
-        DOM.ileDisplay.innerHTML = `<b>Ile</b>:${gameVariables.aminoAcids["Ile"]}`;
-        DOM.metDisplay.innerHTML = `<b>Met</b>:${gameVariables.aminoAcids["Met"]}`;
-        DOM.valDisplay.innerHTML = `<b>Val</b>:${gameVariables.aminoAcids["Val"]}`;
-        DOM.serDisplay.innerHTML = `<b>Ser</b>:${gameVariables.aminoAcids["Ser"]}`;
+        DOM.LeuDisplay.innerHTML = `<b>Leu</b>:${gameVariables.aminoAcids["Leu"]}`;
+        DOM.IleDisplay.innerHTML = `<b>Ile</b>:${gameVariables.aminoAcids["Ile"]}`;
+        DOM.MetDisplay.innerHTML = `<b>Met</b>:${gameVariables.aminoAcids["Met"]}`;
+        DOM.ValDisplay.innerHTML = `<b>Val</b>:${gameVariables.aminoAcids["Val"]}`;
+        DOM.SerDisplay.innerHTML = `<b>Ser</b>:${gameVariables.aminoAcids["Ser"]}`;
         DOM.ProDisplay.innerHTML = `<b>Pro</b>:${gameVariables.aminoAcids["Pro"]}`;
-        DOM.thrDisplay.innerHTML = `<b>Thr</b>:${gameVariables.aminoAcids["Thr"]}`;
-        DOM.alaDisplay.innerHTML = `<b>Ala</b>:${gameVariables.aminoAcids["Ala"]}`;
+        DOM.ThrDisplay.innerHTML = `<b>Thr</b>:${gameVariables.aminoAcids["Thr"]}`;
+        DOM.AlaDisplay.innerHTML = `<b>Ala</b>:${gameVariables.aminoAcids["Ala"]}`;
         DOM.TyrDisplay.innerHTML = `<b>Tyr</b>:${gameVariables.aminoAcids["Tyr"]}`;
-        DOM.hisDisplay.innerHTML = `<b>His</b>:${gameVariables.aminoAcids["His"]}`;
-        DOM.ginDisplay.innerHTML = `<b>Gin</b>:${gameVariables.aminoAcids["Gin"]}`;
-        DOM.asnDisplay.innerHTML = `<b>Asn</b>:${gameVariables.aminoAcids["Asn"]}`;
-        DOM.lysDisplay.innerHTML = `<b>Lys</b>:${gameVariables.aminoAcids["Lys"]}`;
-        DOM.aspDisplay.innerHTML = `<b>Asp</b>:${gameVariables.aminoAcids["Asp"]}`;
-        DOM.gluDisplay.innerHTML = `<b>Glu</b>:${gameVariables.aminoAcids["Glu"]}`;
-        DOM.cysDisplay.innerHTML = `<b>Cys</b>:${gameVariables.aminoAcids["Cys"]}`;
-        DOM.trpDisplay.innerHTML = `<b>Trp</b>:${gameVariables.aminoAcids["Trp"]}`;
-        DOM.argDisplay.innerHTML = `<b>Arg</b>:${gameVariables.aminoAcids["Arg"]}`;
-        DOM.glyDisplay.innerHTML = `<b>Gly</b>:${gameVariables.aminoAcids["Gly"]}`;
+        DOM.HisDisplay.innerHTML = `<b>His</b>:${gameVariables.aminoAcids["His"]}`;
+        DOM.GinDisplay.innerHTML = `<b>Gin</b>:${gameVariables.aminoAcids["Gin"]}`;
+        DOM.AsnDisplay.innerHTML = `<b>Asn</b>:${gameVariables.aminoAcids["Asn"]}`;
+        DOM.LysDisplay.innerHTML = `<b>Lys</b>:${gameVariables.aminoAcids["Lys"]}`;
+        DOM.AspDisplay.innerHTML = `<b>Asp</b>:${gameVariables.aminoAcids["Asp"]}`;
+        DOM.GluDisplay.innerHTML = `<b>Glu</b>:${gameVariables.aminoAcids["Glu"]}`;
+        DOM.CysDisplay.innerHTML = `<b>Cys</b>:${gameVariables.aminoAcids["Cys"]}`;
+        DOM.TrpDisplay.innerHTML = `<b>Trp</b>:${gameVariables.aminoAcids["Trp"]}`;
+        DOM.ArgDisplay.innerHTML = `<b>Arg</b>:${gameVariables.aminoAcids["Arg"]}`;
+        DOM.GlyDisplay.innerHTML = `<b>Gly</b>:${gameVariables.aminoAcids["Gly"]}`;
         DOM.dnaStrand.innerHTML = `<b>DNA</b>: ${gameVariables.DNAString}`;
         DOM.rnaStrand.innerHTML = `<b>RNA</b>: ${gameVariables.RNAstring}`;
         DOM.aminoAcidstrand.innerHTML = `<b>Amino Acids</b>: ${gameVariables.finalAminoAcids}`;
@@ -414,7 +440,7 @@ const gameVariables = {
     DNACheck: false,
     DNAString: " ",
     RNAcheck: false,
-    RNAstring: ["UAC","CCA","CCA","CCA"],
+    RNAstring: [],
     aminoAcids: {
         "Phe": 3,
         "Leu": 0,
@@ -549,6 +575,8 @@ const cellMembrane = {
       //  console.log(type);
         DOM.displayContainer.textContent = `You gained one ${type} amino acid!`;
         gameVariables.aminoAcids[type] += 1;
+        gameVariables.ATP--;
+        gameVariables.co2++;
         display.showVariables();
         newColor = type + "Display";
         console.log(newColor);
@@ -649,6 +677,19 @@ const ribosome = {
     },
 
     produceProtein2(){        
+
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+        }
+
+        else if(gameVariables.ATP === 0){
+            DOM.displayContainer.textContent = "Not enough ATP!"
+        } else if(gameVariables.DNACheck === false){
+                DOM.displayContainer.textContent = "You must have a DNA strand to transcribe before you can translate into amino acids."
+        } else if (gameVariables.RNAcheck === false){
+            DOM.displayContainer.textContent = "You must transcribe the DNA to RNA first."
+        }
+
         rnaCodons = gameVariables.RNAstring;
         let aminoAcidCount = false;
         translatedCheck = false;
@@ -739,7 +780,7 @@ const ribosome = {
             }
             
             if (!gameVariables.aminoAcids[correctAminoAcid] || gameVariables.aminoAcids[correctAminoAcid] < aminoacidOccur[correctAminoAcid]) {
-                alert(`You don't have enough ${correctAminoAcid}. Please obtain more.`);
+                alert(`You don't have the correct amino acids. Please obtain more.`);
                 console.log(aminoAcidCount);
                 console.log(translatedCheck);
                 return 
@@ -771,12 +812,12 @@ const ribosome = {
 
             for(i=0;i<translatedAminoAcids.length;i++){
             if(userAminoAcids[i]!==translatedAminoAcids[i]) {
-                console.log("no good")
+                DOM.displayContainer.textContent = "Incorrect order of amino acids."
                 return
                 }
             }
 
-            console.log("congrat!")
+            console.log("congrats!")
             finalCheck=true;
 
             
@@ -807,6 +848,11 @@ const ribosome = {
             }
 
             gameVariables.proteins++;
+            gameVariables.ATP--;
+            gameVariables.co2++;
+            gameVariables.DNACheck = false;
+            gameVariables.RNAcheck = false;
+            display.showVariables();
         }    
     }
 }
@@ -860,6 +906,24 @@ const nucleus = {
     },
 
     getDNA(){
+
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+            return
+        }
+
+        else if(gameVariables.ATP === 0){
+            DOM.displayContainer.textContent = "Not enough ATP!"
+            return
+        }
+
+        if(gameVariables.DNACheck === true){
+            DOM.displayContainer.textContent = "You already have a DNA strand to transcribe."
+            return
+        }
+        gameVariables.DNAString = "";
+        gameVariables.RNAstring = "";
+        gameVariables.finalAminoAcids = "";
         let codons = ["TAC"];
         for(i=0; i<3; i++)
         {
@@ -875,17 +939,41 @@ const nucleus = {
           }
 
         for(i=1; i<5; i++){
-            if(codons[i]=== "TAC" || codons[i] === "UAA" || codons[i] === "UAG" || codons[i]=== "UGA"){
+            if(codons[i]=== "TAC" || codons[i] === "ATT" || codons[i] === "ATC" || codons[i]=== "ACT"){
                 codons[i] = "CCC"
             }
         }
 
         gameVariables.DNAString = codons;
+        gameVariables.DNACheck = true;
+        gameVariables.ATP--;
+        gameVariables.co2++;
         return codons
 
     },
 
     transcribeDNA(){
+
+        if(gameVariables.co2 === 5){
+            DOM.displayContainer.textContent = "Too much carbon dioxide in the cell!"
+            return
+        }
+
+        else if(gameVariables.ATP === 0){
+            DOM.displayContainer.textContent = "Not enough ATP!"
+            return
+        }
+
+        if(gameVariables.DNACheck === false){
+            DOM.displayContainer.textContent = "You must get a DNA strand first!"
+            return
+        }
+
+        if(gameVariables.RNAcheck===true){
+            DOM.displayContainer.textContent = "You have already transcribed the DNA."
+            return
+        }
+
         dnaCodons = gameVariables.DNAString;
         console.log(dnaCodons);
         rnaCodons = [];
@@ -904,6 +992,9 @@ const nucleus = {
           }
         
           gameVariables.RNAstring = rnaCodons;
+          gameVariables.ATP--;
+          gameVariables.co2++;
+          gameVariables.RNAcheck=true;
           return rnaCodons;
 
 
