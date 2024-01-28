@@ -36,10 +36,10 @@ const DOM = {
     metDisplay:document.querySelector("#met"),
     valDisplay:document.querySelector("#val"),
     serDisplay:document.querySelector("#ser"),
-    prolDisplay:document.querySelector("#pro"),
+    ProDisplay:document.querySelector("#pro"),
     thrDisplay:document.querySelector("#thr"),
     alaDisplay:document.querySelector("#ala"),
-    tyrDisplay:document.querySelector("#tyr"),
+    TyrDisplay:document.querySelector("#tyr"),
     hisDisplay:document.querySelector("#his"),
     ginDisplay:document.querySelector("#gin"),
     asnDisplay:document.querySelector("#asn"),
@@ -359,10 +359,10 @@ const display = {
         DOM.metDisplay.innerHTML = `<b>Met</b>:${gameVariables.aminoAcids["Met"]}`;
         DOM.valDisplay.innerHTML = `<b>Val</b>:${gameVariables.aminoAcids["Val"]}`;
         DOM.serDisplay.innerHTML = `<b>Ser</b>:${gameVariables.aminoAcids["Ser"]}`;
-        DOM.prolDisplay.innerHTML = `<b>Pro</b>:${gameVariables.aminoAcids["Pro"]}`;
+        DOM.ProDisplay.innerHTML = `<b>Pro</b>:${gameVariables.aminoAcids["Pro"]}`;
         DOM.thrDisplay.innerHTML = `<b>Thr</b>:${gameVariables.aminoAcids["Thr"]}`;
         DOM.alaDisplay.innerHTML = `<b>Ala</b>:${gameVariables.aminoAcids["Ala"]}`;
-        DOM.tyrDisplay.innerHTML = `<b>Tyr</b>:${gameVariables.aminoAcids["Tyr"]}`;
+        DOM.TyrDisplay.innerHTML = `<b>Tyr</b>:${gameVariables.aminoAcids["Tyr"]}`;
         DOM.hisDisplay.innerHTML = `<b>His</b>:${gameVariables.aminoAcids["His"]}`;
         DOM.ginDisplay.innerHTML = `<b>Gin</b>:${gameVariables.aminoAcids["Gin"]}`;
         DOM.asnDisplay.innerHTML = `<b>Asn</b>:${gameVariables.aminoAcids["Asn"]}`;
@@ -777,6 +777,7 @@ const ribosome = {
             for(i=0;i<translatedAminoAcids.length;i++){
                 rnaCodon = rnaCodons[i];
                 let correctAminoAcid = rnaCodonToAminoAcidMapping[rnaCodon];
+                console.log(correctAminoAcid);
                 console.log(aminoacidOccur[correctAminoAcid]);
 
                 if(aminoacidOccur[correctAminoAcid]>1){
@@ -784,10 +785,17 @@ const ribosome = {
                 }
             gameVariables.aminoAcids[correctAminoAcid] -= aminoacidOccur[correctAminoAcid]; 
             gameVariables.finalAminoAcids = translatedAminoAcids;
-            DOM.displayContainer.innerHTML="You did it!"
+            
+            DOM.displayContainer.innerHTML="1 protein synthesized!"
             display.showVariables();
+            aminoChange = translatedAminoAcids[i] + "Display";
+            aminoColor = DOM[aminoChange];
+            display.turnRed(aminoColor)
+            
 
             }
+
+            gameVariables.proteins++;
         }    
     }
 }
