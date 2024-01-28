@@ -30,7 +30,7 @@ const DOM = {
     aminoacidName: document.querySelector("#aminoacidsname"),
     aminoacidSelect: document.querySelector("#selectaminoacid"),
     aminoacidSelectContainer:document.querySelector(".aminoacid-select-container"),
-    pheDisplay:document.querySelector("#phe1"),
+    PheDisplay:document.querySelector("#phe1"),
     leuDisplay:document.querySelector("#leu"),
     ileDisplay:document.querySelector("#ile"),
     metDisplay:document.querySelector("#met"),
@@ -75,6 +75,7 @@ const DOM = {
     aminoAcidBtnCreated:false,
     aminoAcidText: false,
     geneBtnCreated:false,
+    buttonClicked:false,
 }
 
 DOM.startBtn.addEventListener("click", function(){
@@ -169,16 +170,19 @@ DOM.cellMemBtn.addEventListener("click", function(){
         })
 
         btn6.addEventListener("click", function(){
-            DOM.displayContainer.textContent = "";
-            DOM.aminoacidSelectContainer.style.display="flex";
-            DOM.aminoacidSelectContainer.classList.add("amino-acid");
+            DOM.displayContainer.textContent="";
+            DOM.aminoacidSelectContainer.style.display = "flex";
+            DOM.aminoacidSelectContainer.remove();
             DOM.displayContainer.append(DOM.aminoacidSelectContainer);
-             DOM.aminoacidSelect.addEventListener("click", function(){
-                type = DOM.aminoacidName.value;
-                cellMembrane.getAminoAcid2(type);
-               DOM.aminoacidSelectContainer.remove();
-
-            })
+            if(!DOM.buttonClicked){
+                DOM.aminoacidSelect.addEventListener("click", function(){
+                    type = DOM.aminoacidName.value;
+                    cellMembrane.getAminoAcid2(type);
+                    DOM.aminoacidSelectContainer.remove();
+                });
+                DOM.buttonClicked = true;
+            }
+            
         })
 
         btn2.addEventListener("click", function(){
@@ -353,7 +357,7 @@ const display = {
         DOM.atpDisplay.innerHTML = `<b>ATP</b>: ${gameVariables.ATP}`;
         DOM.oxyDisplay.innerHTML = `<b>Oxygen</b>: ${gameVariables.oxygen}`;
         DOM.co2Display.innerHTML = `<b>Carbon Dioxide</b>: ${gameVariables.co2}`;
-        DOM.pheDisplay.innerHTML = `<b>Phe</b>:${gameVariables.aminoAcids["Phe"]}`;
+        DOM.PheDisplay.innerHTML = `<b>Phe</b>:${gameVariables.aminoAcids["Phe"]}`;
         DOM.leuDisplay.innerHTML = `<b>Leu</b>:${gameVariables.aminoAcids["Leu"]}`;
         DOM.ileDisplay.innerHTML = `<b>Ile</b>:${gameVariables.aminoAcids["Ile"]}`;
         DOM.metDisplay.innerHTML = `<b>Met</b>:${gameVariables.aminoAcids["Met"]}`;
@@ -376,6 +380,7 @@ const display = {
         DOM.dnaStrand.innerHTML = `<b>DNA</b>: ${gameVariables.DNAString}`;
         DOM.rnaStrand.innerHTML = `<b>RNA</b>: ${gameVariables.RNAstring}`;
         DOM.aminoAcidstrand.innerHTML = `<b>Amino Acids</b>: ${gameVariables.finalAminoAcids}`;
+        DOM.completeProteins.innerHTML = `<b>Proteins</b>: ${gameVariables.proteins}`;
     },
 
     turnRed(div){
@@ -541,9 +546,15 @@ const cellMembrane = {
         }
 
        else {
+      //  console.log(type);
         DOM.displayContainer.textContent = `You gained one ${type} amino acid!`;
-        gameVariables.aminoAcids[type] += 1
+        gameVariables.aminoAcids[type] += 1;
         display.showVariables();
+        newColor = type + "Display";
+        console.log(newColor);
+        newColor2 = DOM[newColor];
+        console.log(newColor2);
+        display.turnGreen(newColor2);
        }
     },
 
