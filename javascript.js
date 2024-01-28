@@ -29,6 +29,7 @@ const DOM = {
     returnBtn:document.querySelector("#back-button"),
     aminoacidName: document.querySelector("#aminoacidsname"),
     aminoacidSelect: document.querySelector("#selectaminoacid"),
+    aminoacidSelectContainer:document.querySelector(".aminoacid-select-container"),
 
     mitoImg: document.querySelector("#mito-img"),
     riboImg: document.querySelector("#ribosome-img"),
@@ -142,9 +143,14 @@ DOM.cellMemBtn.addEventListener("click", function(){
         })
 
         btn6.addEventListener("click", function(){
-            DOM.aminoacidSelect.addEventListener("click", function(){
+            DOM.displayContainer.textContent = "";
+            DOM.aminoacidSelectContainer.style.display="flex";
+            DOM.aminoacidSelectContainer.classList.add("amino-acid");
+            DOM.displayContainer.append(DOM.aminoacidSelectContainer);
+             DOM.aminoacidSelect.addEventListener("click", function(){
                 type = DOM.aminoacidName.value;
                 cellMembrane.getAminoAcid2(type);
+               DOM.aminoacidSelectContainer.remove();
 
             })
         })
@@ -489,6 +495,7 @@ const cellMembrane = {
         }
 
        else {
+        DOM.displayContainer.textContent = `You gained one ${type} amino acid!`;
         gameVariables.aminoAcids[type] += 1
        }
     },
