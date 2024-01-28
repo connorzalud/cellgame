@@ -759,20 +759,20 @@ const ribosome = {
           console.log(userAminoAcids);
 
             for(i=0;i<translatedAminoAcids.length;i++){
-            if(userAminoAcids[i]===translatedAminoAcids[i]) {
-                console.log("Congrats!")
-                finalCheck = true;
-                } else{
-                DOM.displayContainer.innerHTML = "No good."
-                console.log(finalCheck);
+            if(userAminoAcids[i]!==translatedAminoAcids[i]) {
+                console.log("no good")
+                return
+                }
             }
-            }
+
+            console.log("congrat!")
+            finalCheck=true;
+
             
         }
           console.log(finalCheck);
 
         if(finalCheck){
-            console.log("hello");
             console.log(translatedAminoAcids)
             for(i=0;i<translatedAminoAcids.length;i++){
                 rnaCodon = rnaCodons[i];
