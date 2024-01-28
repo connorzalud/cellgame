@@ -52,12 +52,21 @@
 }
 
 .cell-buttons-container{
-    grid-column: 1/4;
+    grid-column: 3/4;
     border:1px solid black;
-    display:flex;
+    display:grid;
     justify-content: space-around;
     align-items: center;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr;
+    align-items: center;
+    justify-items: center;
     
+}
+
+.cell-btn-action{
+    width:100px;
+    height:40px;
 }
 
 cell-buttons-container button{
